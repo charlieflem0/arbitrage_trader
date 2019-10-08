@@ -1,0 +1,25 @@
+Function arb(timeremaining)
+
+	Dim API As RIT2.API
+	Set API = New RIT2.API
+
+	If timeremaining < 295 And timeremaining > 5 Then
+
+		If Range("CRZY_A_BID") > Range("CRZY_M_ASK") Then
+			OrderID = API.AddOrder("CRZY_M", 1000, 0, API.BUY, API.MKT)
+			OrderID = API.AddOrder("CRZY_A", 1000, 0, API.SELL, API.MKT)
+		End If
+
+		If Range("CRZY_M_BID") > Range("CRZY_A_ASK") Then
+			OrderID = API.AddOrder("CRZY_A", 1000, 0, API.BUY, API.MKT)
+			OrderID = API.AddOrder("CRZY_M", 1000, 0, API.SELL, API.MKT)
+		End If
+
+	End If
+
+End Function
+
+//program logic to check for arbitrage opportunities
+//check the two potential arb opporutniie,s if ask price A less than bid price M,
+//then algo should market order to buy A and sell M. if ask price A less than bid price A, sell A buy M (all market orders)
+//program logic to execute the appropriate trades
